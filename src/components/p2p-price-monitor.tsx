@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from 'react';
-
+import Image from "next/image";
 import {
   Table,
   TableHeader,
@@ -11,8 +11,6 @@ import {
   TableCell,
 } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
-import { ArrowUp, ArrowDown } from "lucide-react";
-import Image from "next/image";
 import { Card, CardContent } from "@/components/ui/card";
 
 interface P2PPrice {
@@ -24,51 +22,59 @@ interface P2PPrice {
   sellPrice: number | null;
 }
 
-// Initialize with just the single data source entry
-const initialPriceData: P2PPrice[] = [
-  { // Representing the aggregated data from the new API
-    platform: "Aggregated Data",
-    platformLogo: "https://placehold.co/32x32.png", // Use a generic logo or replace with one for your service
-    asset: "USDT",
-    paymentMethod: "Aggregated Data",
-  const [priceData, setPriceData] = useState<P2PPrice[]>(initialPriceData);
+const platformDomainMapping: { [key: string]: string } = {
+  binancep2p: 'binance.com',
+  paxfulp2p: 'paxful.com',
+  bybitp2p: 'bybit.com',
+  bitgetp2p: 'bitget.com',
+  eldoradop2p: 'eldorado.gg',
+};
+
+export default function P2pPriceMonitor() {
+  const [priceData, setPriceData] = useState<P2PPrice[]>([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const ws = new WebSocket('ws://localhost:8080'); // Connect to your backend WebSocket server
+    const fetchData = async () => {
+      try {
+        setLoading(true);
+        const response = await fetch('https://criptoya.com/api/USDT/BOB/1');
+        if (!response.ok) {
+          throw new Error('La respuesta de la red no fue correcta');
+        }
+        const data = await response.json();
 
-    ws.onmessage = (event) => {
-      const data = JSON.parse(event.data as string);
-      console.log('Received WebSocket data:', data);
+        const formattedData: P2PPrice[] = Object.entries(data)
+          .filter(([key, value]) => key !== 'time' && value && typeof value === 'object' && 'ask' in value && 'bid' in value)
+          .map(([platform, values]: [string, any]) => {
+            const domain = platformDomainMapping[platform] || 'placehold.co';
+            const logoUrl = domain === 'placehold.co' 
+              ? 'https://placehold.co/24x24.png' 
+              : `https://www.google.com/s2/favicons?domain=${domain}`;
+            
+            return {
+              platform: platform.replace('p2p', ' P2P'),
+              platformLogo: logoUrl,
+              asset: 'USDT',
+              paymentMethod: 'Varios',
+              buyPrice: values.ask,
+              sellPrice: values.bid,
+            };
+          });
 
-      setPriceData(prevData => {
-        return prevData.map(item => {
-          // Update the single entry with the aggregated data
-          if (item.asset === 'USDT' && item.platform === 'Aggregated Data') {
-            return { ...item, buyPrice: data.buyPrice, sellPrice: data.sellPrice };
-          }
-          return item;
-        });
-      });
+        setPriceData(formattedData);
+      } catch (error) {
+        console.error('No se pudieron obtener los datos de precios:', error);
+      } finally {
+        setLoading(false);
+      }
     };
 
-    ws.onopen = () => {
-      console.log('WebSocket connection established');
-    };
+    fetchData();
+    const interval = setInterval(fetchData, 60000); // Actualizar cada minuto
 
-    ws.onerror = (error) => {
-      console.error('WebSocket error:', error);
-    };
-
-    ws.onclose = () => {
-      console.log('WebSocket connection closed');
-    };
-
-    // Clean up the WebSocket connection when the component unmounts
-    return () => {
-      ws.close();
-    };
-  }, []); // Empty dependency array means this effect runs only once on mount
-
+    return () => clearInterval(interval); // Limpiar al desmontar el componente
+  }, []);
 
   return (
     <Card>
@@ -78,48 +84,46 @@ const initialPriceData: P2PPrice[] = [
             <TableHeader>
               <TableRow>
                 <TableHead>Plataforma / Activo</TableHead>
-                <TableHead>Data Source</TableHead>
+                <TableHead>Métodos de Pago</TableHead>
                 <TableHead className="text-right">Precio Compra (BOB)</TableHead>
                 <TableHead className="text-right">Precio Venta (BOB)</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
-              {priceData.map((data, index) => (
-                <TableRow key={`${data.platform}-${data.asset}-${data.paymentMethod}`}>
-                  <TableCell>
-                    <div className="flex items-center gap-3">
-                        <Image
-                            src={data.platformLogo}
-                            alt={`${data.platform} logo`}
-                            width={32}
-                            height={32}
-                            className="rounded-full"
-                            data-ai-hint="crypto exchange"
-                        />
-                        <div>
-                            <div className="font-medium">{data.platform}</div>
-                            <Badge variant="outline" className="font-mono">{data.asset}</Badge>
-                        </div>
-                    </div>
-                  </TableCell>
-                  <TableCell>{data.paymentMethod}</TableCell>
-                  {/* Displaying buy and sell prices from the aggregated data */}
-                  <TableCell className="text-right font-mono text-lg">
-                    {data.buyPrice !== null ? (
-                      data.buyPrice.toFixed(2)
-                    ) : (
-                      <span>Loading...</span>
-                    )}
-                  </TableCell>
-                  <TableCell className="text-right font-mono text-lg">
-                    {data.sellPrice !== null ? (
-                      data.sellPrice.toFixed(2)
-                    ) : (
-                      <span>Loading...</span>
-                    )}
+              {loading ? (
+                <TableRow>
+                  <TableCell colSpan={4} className="text-center">
+                    Cargando datos...
                   </TableCell>
                 </TableRow>
-              ))}
+              ) : (
+                priceData.map((data) => (
+                  <TableRow key={data.platform}>
+                    <TableCell>
+                      <div className="flex items-center gap-3">
+                          <Image
+                              src={data.platformLogo}
+                              alt={`${data.platform} logo`}
+                              width={24}
+                              height={24}
+                              className="rounded-full"
+                          />
+                          <div>
+                              <div className="font-medium">{data.platform}</div>
+                              <Badge variant="outline" className="font-mono">{data.asset}</Badge>
+                          </div>
+                      </div>
+                    </TableCell>
+                    <TableCell>{data.paymentMethod}</TableCell>
+                    <TableCell className="text-right font-mono text-lg">
+                      {data.buyPrice !== null ? data.buyPrice.toFixed(2) : <span>-</span>}
+                    </TableCell>
+                    <TableCell className="text-right font-mono text-lg">
+                      {data.sellPrice !== null ? data.sellPrice.toFixed(2) : <span>-</span>}
+                    </TableCell>
+                  </TableRow>
+                ))
+              )}
             </TableBody>
           </Table>
         </div>
