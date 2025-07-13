@@ -114,8 +114,8 @@ export default function NewsList({ }: Props) {
     if (error) {
         return (
             <Alert variant="destructive">
-                <AlertTitle>Error</AlertTitle>
-                <AlertDescription>{error}</AlertDescription>
+                <AlertTitle>¡Alerta! El sistema está bajo ataque centralizado</AlertTitle>
+                <AlertDescription>La Matrix ha intentado ocultarnos la verdad: {error}</AlertDescription>
             </Alert>
         );
     }
@@ -133,7 +133,7 @@ export default function NewsList({ }: Props) {
                     <CardFooter>
                         {article.link && (
                             <Button variant="link" asChild className="p-0">
-                                <Link href={article.link}>Leer más</Link>
+                                <Link href={article.link}>Adentrarse en la madriguera del conejo</Link>
                             </Button>
                         )}
                     </CardFooter>

@@ -16,45 +16,6 @@ export default function NewsAggregator() {
     const { toast } = useToast();
     const API_KEY = "pub_15013d3f83fb42f3b7ea61600f77c2be";
     const [newsArticles, setNewsArticles] = useState<NewsArticle[]>([]);
-    const [hasFetchedNews, setHasFetchedNews] = useState(false);
-
-    useEffect(() => {
-        async function fetchNews() {
-            if (hasFetchedNews) {
-                return;
-            }
-
-            const rapidApiKey = process.env.NEXT_PUBLIC_RAPIDAPI_KEY;
-            const rapidApiHost = 'bitcoin-news1.p.rapidapi.com';
-            const rapidApiUrl = 'https://bitcoin-news1.p.rapidapi.com/news';
-
-            async function getNews() {
-              try {
-                  const rapidApiResponse = await fetch(rapidApiUrl, {
-                      headers: {
-                          'x-rapidapi-host': rapidApiHost,
-                          'x-rapidapi-key': rapidApiKey || '',
-                      },
-                  });
-
-                  if (!rapidApiResponse.ok) {
-                      throw new Error(`HTTP error! status: ${rapidApiResponse.status}`);
-                  }
-
-                  const rapidApiData = await rapidApiResponse.json();
-                  const rapidApiArticles = rapidApiData || [];
-                  setNewsArticles(rapidApiArticles);
-                  setHasFetchedNews(true);
-              } catch (error) {
-                  console.error("Could not fetch news from RapidAPI:", error);
-              }
-            }
-
-            getNews();
-        }
-
-        fetchNews();
-    }, [hasFetchedNews]);
 
     const handleSummarize = async () => {
         setIsLoading(true);
@@ -86,7 +47,7 @@ export default function NewsAggregator() {
     return (
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
             <div className="lg:col-span-2 space-y-4">
-                <h2 className="font-headline text-2xl font-semibold">Últimas Noticias</h2>
+                <h2 className="font-headline text-2xl font-semibold">Noticias que te liberan del control centralizado</h2>
                 {newsArticles && newsArticles.map((article: NewsArticle, index: number) => (
                     <Card key={index}>
                         <CardHeader>
@@ -107,8 +68,8 @@ export default function NewsAggregator() {
             <div className="lg:col-span-1">
                 <Card className="sticky top-20">
                     <CardHeader>
-                        <CardTitle className="flex items-center gap-2"><Bot className="h-6 w-6 text-primary"/> Resumen de IA</CardTitle>
-                        <CardDescription>Un análisis de las noticias más relevantes para el contexto boliviano.</CardDescription>
+                        <CardTitle className="flex items-center gap-2"><Bot className="h-6 w-6 text-primary"/> Visión de la IA sobre la revolución Bitcoin</CardTitle>
+                        <CardDescription>Descifrando el futuro financiero de Bolivia, impulsado por Bitcoin.</CardDescription>
                     </CardHeader>
                     <CardContent className="min-h-[200px]">
                         {isLoading && (
@@ -122,14 +83,14 @@ export default function NewsAggregator() {
                         {!isLoading && !summary && (
                             <div className="text-center text-muted-foreground p-8 flex flex-col items-center justify-center">
                                 <Sparkles className="h-10 w-10 mb-4" />
-                                <p>Presiona el botón para generar un resumen con IA de las noticias actuales.</p>
+                                <p>¡Desbloquea la verdad! Pulsa para un resumen de IA que te empodera.</p>
                             </div>
                         )}
                         {summary && <p className="text-sm text-foreground whitespace-pre-wrap font-sans">{summary}</p>}
                     </CardContent>
                     <CardFooter>
                         <Button onClick={handleSummarize} disabled={isLoading} className="w-full">
-                            {isLoading ? 'Generando...' : 'Generar Resumen'}
+                            {isLoading ? 'Descentralizando la información...' : '¡Quiero la verdad!'}
                         </Button>
                     </CardFooter>
                 </Card>
