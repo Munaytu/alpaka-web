@@ -22,30 +22,15 @@ interface P2PPrice {
   paymentMethod: string;
   buyPrice: number | null;
   sellPrice: number | null;
-  trader?: string; // Optional as we might not get this from the API
-  trend?: 'up' | 'down'; // Optional
 }
 
+// Initialize with just the single data source entry
 const initialPriceData: P2PPrice[] = [
-  {
-    platform: "Binance P2P",
-    platformLogo: "https://placehold.co/32x32.png",
+  { // Representing the aggregated data from the new API
+    platform: "Aggregated Data",
+    platformLogo: "https://placehold.co/32x32.png", // Use a generic logo or replace with one for your service
     asset: "USDT",
-    paymentMethod: "Bank Transfer",
-    buyPrice: null,
-    sellPrice: null,
-  },
-  {
-    platform: "Bybit P2P",
-    platformLogo: "https://placehold.co/32x32.png",
-    asset: "USDT",
-    paymentMethod: "Bank Transfer",
-    buyPrice: null,
-    sellPrice: null,
-  },
-];
-
-export default function P2pPriceMonitor() {
+    paymentMethod: "Aggregated Data",
   const [priceData, setPriceData] = useState<P2PPrice[]>(initialPriceData);
 
   useEffect(() => {
@@ -57,10 +42,9 @@ export default function P2pPriceMonitor() {
 
       setPriceData(prevData => {
         return prevData.map(item => {
-          // Update based on the source (binance or bybit) and asset (USDT)
-          // We are no longer filtering by paymentMethod or assuming specific asset from the backend data directly
-          if (item.asset === 'USDT' && item.platform.toLowerCase().includes(data.source)) {
-            return { ...item, buyPrice: data.data.bid, sellPrice: data.data.ask };
+          // Update the single entry with the aggregated data
+          if (item.asset === 'USDT' && item.platform === 'Aggregated Data') {
+            return { ...item, buyPrice: data.buyPrice, sellPrice: data.sellPrice };
           }
           return item;
         });
@@ -94,7 +78,7 @@ export default function P2pPriceMonitor() {
             <TableHeader>
               <TableRow>
                 <TableHead>Plataforma / Activo</TableHead>
-                <TableHead>Método de Pago</TableHead>
+                <TableHead>Data Source</TableHead>
                 <TableHead className="text-right">Precio Compra (BOB)</TableHead>
                 <TableHead className="text-right">Precio Venta (BOB)</TableHead>
               </TableRow>
@@ -119,28 +103,21 @@ export default function P2pPriceMonitor() {
                     </div>
                   </TableCell>
                   <TableCell>{data.paymentMethod}</TableCell>
-                  <TableCell className="text-right">
- {data.buyPrice !== null ? (
- <div className="flex items-center justify-end gap-1 font-mono text-lg">
- {data.buyPrice.toFixed(2)}
- {/* Trend indicator is not directly available from P2P API, can implement logic based on price changes */}
- {/* {data.trend === 'up' ? <ArrowUp className="h-4 w-4 text-green-400" /> : <ArrowDown className="h-4 w-4 text-red-400" />} */}
- </div>
- ) : (
- <span>Loading...</span>
- )}
+                  {/* Displaying buy and sell prices from the aggregated data */}
+                  <TableCell className="text-right font-mono text-lg">
+                    {data.buyPrice !== null ? (
+                      data.buyPrice.toFixed(2)
+                    ) : (
+                      <span>Loading...</span>
+                    )}
                   </TableCell>
-                  <TableCell className="text-right">
- {data.sellPrice !== null ? (
- <div className="flex items-center justify-end gap-1 font-mono text-lg">
- {data.sellPrice.toFixed(2)}
- {/* Trend indicator */}
- </div>
- ) : (
- <span>Loading...</span>
- )}
+                  <TableCell className="text-right font-mono text-lg">
+                    {data.sellPrice !== null ? (
+                      data.sellPrice.toFixed(2)
+                    ) : (
+                      <span>Loading...</span>
+                    )}
                   </TableCell>
-                  <TableCell className="text-primary">{data.trader || 'N/A'}</TableCell>
                 </TableRow>
               ))}
             </TableBody>
