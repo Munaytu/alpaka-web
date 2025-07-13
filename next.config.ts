@@ -24,6 +24,10 @@ const nextConfig: NextConfig = {
       },
     ],
   },
+  env: {
+    NEWSDATA_IO_API_KEY: process.env.NEWSDATA_IO_API_KEY,
+    NEWSAPI_ORG_API_KEY: process.env.NEWSAPI_ORG_API_KEY,
+  },
 };
 
 export default nextConfig;

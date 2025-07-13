@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from 'react';
+import { useEffect } from 'react';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Skeleton } from '@/components/ui/skeleton';
@@ -31,6 +32,43 @@ const mockNewsArticles = [
     },
 ];
 
+
+    const [boliviaNews, setBoliviaNews] = useState([]);
+    const API_KEY = "pub_15013d3f83fb42f3b7ea61600f77c2be";
+    const [cryptoNews, setCryptoNews] = useState([]);
+
+async function getNews(country: string | null, q: string | null = null) {
+    useEffect(() => {
+        async function fetchNews() {
+            const boliviaNewsData = await getNews("bo");
+            const cryptoNewsData = await getNews(null, "crypto");
+            setBoliviaNews(boliviaNewsData);
+            setCryptoNews(cryptoNewsData);
+        }
+
+        fetchNews();
+    }, []);
+  let url = `https://newsdata.io/api/1/latest?apikey=${API_KEY}`;
+
+  if (country) {
+    url += `&country=${country}`;
+  }
+  if (q) {
+    url += `&q=${q}`;
+  }
+
+  try {
+    const response = await fetch(url);
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    const data = await response.json();
+    return data.results;
+  } catch (error) {
+    console.error("Could not fetch news:", error);
+    return [];
+  }
+}
 export default function NewsAggregator() {
     const [summary, setSummary] = useState<string | null>(null);
     const [isLoading, setIsLoading] = useState(false);
