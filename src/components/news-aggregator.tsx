@@ -1,85 +1,67 @@
 "use client";
 
-import { useState } from 'react';
-import { useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Skeleton } from '@/components/ui/skeleton';
-import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
-import { Terminal, Bot, Sparkles } from 'lucide-react';
+import { Bot, Sparkles } from 'lucide-react';
 import Link from 'next/link';
 import { getSummary } from '@/app/actions';
 import { useToast } from "@/hooks/use-toast";
+import { NewsArticle } from "@/components/NewsList";
 
-const mockNewsArticles = [
-    {
-      title: "Bitcoin supera los $70,000 mientras la adopción institucional crece",
-      content: "El precio de Bitcoin ha alcanzado un nuevo máximo histórico, impulsado por el interés de grandes empresas y fondos de inversión. En Bolivia, los exchanges locales reportan un aumento del 25% en el volumen de operaciones.",
-      url: "#",
-      source: "CryptoNoticias",
-    },
-    {
-      title: "El Banco Central de Bolivia advierte sobre los riesgos de las criptomonedas",
-      content: "La autoridad monetaria emitió un comunicado reiterando la prohibición del uso de criptoactivos para pagos dentro del territorio nacional, y advirtiendo a la población sobre la volatilidad y los riesgos de estafa asociados.",
-      url: "#",
-      source: "El Deber",
-    },
-    {
-      title: "BNB Smart Chain anuncia actualización 'Haber' para reducir las comisiones de transacción",
-      content: "La fundación detrás de la BNB Chain planea una importante actualización que promete hacer las transacciones más baratas y rápidas, beneficiando a proyectos como Alpaka que se construyen sobre esta red.",
-      url: "#",
-      source: "CoinDesk",
-    },
-];
-
-
-    const [boliviaNews, setBoliviaNews] = useState([]);
-    const API_KEY = "pub_15013d3f83fb42f3b7ea61600f77c2be";
-    const [cryptoNews, setCryptoNews] = useState([]);
-
-async function getNews(country: string | null, q: string | null = null) {
-    useEffect(() => {
-        async function fetchNews() {
-            const boliviaNewsData = await getNews("bo");
-            const cryptoNewsData = await getNews(null, "crypto");
-            setBoliviaNews(boliviaNewsData);
-            setCryptoNews(cryptoNewsData);
-        }
-
-        fetchNews();
-    }, []);
-  let url = `https://newsdata.io/api/1/latest?apikey=${API_KEY}`;
-
-  if (country) {
-    url += `&country=${country}`;
-  }
-  if (q) {
-    url += `&q=${q}`;
-  }
-
-  try {
-    const response = await fetch(url);
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
-    }
-    const data = await response.json();
-    return data.results;
-  } catch (error) {
-    console.error("Could not fetch news:", error);
-    return [];
-  }
-}
 export default function NewsAggregator() {
     const [summary, setSummary] = useState<string | null>(null);
     const [isLoading, setIsLoading] = useState(false);
     const { toast } = useToast();
+    const API_KEY = "pub_15013d3f83fb42f3b7ea61600f77c2be";
+    const [newsArticles, setNewsArticles] = useState<NewsArticle[]>([]);
+    const [hasFetchedNews, setHasFetchedNews] = useState(false);
+
+    useEffect(() => {
+        async function fetchNews() {
+            if (hasFetchedNews) {
+                return;
+            }
+
+            const rapidApiKey = process.env.NEXT_PUBLIC_RAPIDAPI_KEY;
+            const rapidApiHost = 'bitcoin-news1.p.rapidapi.com';
+            const rapidApiUrl = 'https://bitcoin-news1.p.rapidapi.com/news';
+
+            async function getNews() {
+              try {
+                  const rapidApiResponse = await fetch(rapidApiUrl, {
+                      headers: {
+                          'x-rapidapi-host': rapidApiHost,
+                          'x-rapidapi-key': rapidApiKey || '',
+                      },
+                  });
+
+                  if (!rapidApiResponse.ok) {
+                      throw new Error(`HTTP error! status: ${rapidApiResponse.status}`);
+                  }
+
+                  const rapidApiData = await rapidApiResponse.json();
+                  const rapidApiArticles = rapidApiData || [];
+                  setNewsArticles(rapidApiArticles);
+                  setHasFetchedNews(true);
+              } catch (error) {
+                  console.error("Could not fetch news from RapidAPI:", error);
+              }
+            }
+
+            getNews();
+        }
+
+        fetchNews();
+    }, [hasFetchedNews]);
 
     const handleSummarize = async () => {
         setIsLoading(true);
         setSummary(null);
         
         try {
-            const result = await getSummary({ newsArticles: mockNewsArticles });
+            const result = await getSummary({ newsArticles: newsArticles });
 
             if (result.error) {
                 toast({
@@ -90,7 +72,7 @@ export default function NewsAggregator() {
             } else if (result.summary) {
                 setSummary(result.summary);
             }
-        } catch (e) {
+        } catch {
              toast({
               variant: "destructive",
               title: "Error de Red",
@@ -105,7 +87,7 @@ export default function NewsAggregator() {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
             <div className="lg:col-span-2 space-y-4">
                 <h2 className="font-headline text-2xl font-semibold">Últimas Noticias</h2>
-                {mockNewsArticles.map((article, index) => (
+                {newsArticles && newsArticles.map((article: NewsArticle, index: number) => (
                     <Card key={index}>
                         <CardHeader>
                             <CardTitle>{article.title}</CardTitle>

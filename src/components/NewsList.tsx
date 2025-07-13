@@ -1,7 +1,8 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
 import { useState, useEffect } from 'react';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle, CardFooter } from './ui/card';
+import { Card, CardContent, CardHeader, CardTitle, CardFooter } from './ui/card';
 import { Button } from '@/components/ui/button';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
@@ -38,12 +39,9 @@ interface NewsArticle {
     duplicate: boolean;
 }
 
-interface Props {
-    country?: string;
-    q?: string;
-}
+interface Props {}
 
-export default function NewsList({ country, q }: Props) {
+export default function NewsList({ }: Props) {
     const [news, setNews] = useState<NewsArticle[]>([]);
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
@@ -57,7 +55,7 @@ export default function NewsList({ country, q }: Props) {
             setError(null);
             try {
                 // Fetch news from newsdata.io
-                const newsdataIoUrl = `https://newsdata.io/api/1/latest?apikey=${newsdataIoApiKey}&country=${country}&q=${q}`;
+                const newsdataIoUrl = `https://newsdata.io/api/1/latest?apikey=${newsdataIoApiKey}&country=bo&q=crypto bitcoin`;
                 const newsdataIoResponse = await fetch(newsdataIoUrl);
                 if (!newsdataIoResponse.ok) {
                     throw new Error(`HTTP error! status: ${newsdataIoResponse.status}`);
@@ -66,7 +64,7 @@ export default function NewsList({ country, q }: Props) {
                 const newsdataIoArticles = newsdataIoData.results || [];
 
                 // Fetch news from newsapi.org
-                const newsapiOrgUrl = `https://newsapi.org/v2/top-headlines?apiKey=${newsapiOrgApiKey}&country=${country}&category=technology`;
+                const newsapiOrgUrl = `https://newsapi.org/v2/everything?apiKey=${newsapiOrgApiKey}&q=bolivia crypto bitcoin`;
                 const newsapiOrgResponse = await fetch(newsapiOrgUrl);
                 if (!newsapiOrgResponse.ok) {
                     throw new Error(`HTTP error! status: ${newsapiOrgResponse.status}`);
@@ -86,18 +84,17 @@ export default function NewsList({ country, q }: Props) {
         }
 
         getNews();
-    }, [country, q, newsdataIoApiKey, newsapiOrgApiKey]);
+    }, [newsdataIoApiKey, newsapiOrgApiKey]);
 
     // Function to interleave two arrays
-    function interleaveArrays(arr1: any[], arr2: any[]): any[] {
+    function interleaveArrays(...arrays: (NewsArticle | any)[][]): NewsArticle[] {
         const result: any[] = [];
-        const maxLength = Math.max(arr1.length, arr2.length);
+        const maxLength = Math.max(...arrays.map(arr => arr.length));
         for (let i = 0; i < maxLength; i++) {
-            if (i < arr1.length) {
-                result.push(arr1[i]);
-            }
-            if (i < arr2.length) {
-                result.push(arr2[i]);
+            for (const arr of arrays) {
+                if (i < arr.length) {
+                    result.push(arr[i]);
+                }
             }
         }
         return result;
@@ -129,15 +126,16 @@ export default function NewsList({ country, q }: Props) {
                 <Card key={article.article_id}>
                     <CardHeader>
                         <CardTitle>{article.title}</CardTitle>
-                        <CardDescription>{article.source_id}</CardDescription>
                     </CardHeader>
                     <CardContent>
                         <p className="text-muted-foreground">{article.description}</p>
                     </CardContent>
                     <CardFooter>
-                        <Button variant="link" asChild className="p-0">
-                            <Link href={article.link}>Leer más</Link>
-                        </Button>
+                        {article.link && (
+                            <Button variant="link" asChild className="p-0">
+                                <Link href={article.link}>Leer más</Link>
+                            </Button>
+                        )}
                     </CardFooter>
                 </Card>
             ))}

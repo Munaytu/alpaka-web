@@ -22,6 +22,11 @@ interface P2PPrice {
   sellPrice: number | null;
 }
 
+interface CryptoValues {
+  ask: number;
+  bid: number;
+}
+
 const platformDomainMapping: { [key: string]: string } = {
   binancep2p: 'binance.com',
   paxfulp2p: 'paxful.com',
@@ -46,8 +51,10 @@ export default function P2pPriceMonitor() {
 
         const formattedData: P2PPrice[] = Object.entries(data)
           .filter(([key, value]) => key !== 'time' && value && typeof value === 'object' && 'ask' in value && 'bid' in value)
-          .map(([platform, values]: [string, any]) => {
-            const domain = platformDomainMapping[platform] || 'placehold.co';
+          .map(([platform, value]) => {
+            const values = value as CryptoValues;
+            const platformStr = platform as string;
+            const domain = platformDomainMapping[platformStr] || 'placehold.co';
             const logoUrl = domain === 'placehold.co' 
               ? 'https://placehold.co/24x24.png' 
               : `https://www.google.com/s2/favicons?domain=${domain}`;
