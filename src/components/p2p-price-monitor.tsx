@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useMemo } from 'react';
 import Image from "next/image";
 import {
   Table,
@@ -12,6 +12,7 @@ import {
 } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
+import { ArrowDown, ArrowUp } from 'lucide-react';
 
 interface P2PPrice {
   platform: string;
@@ -42,7 +43,10 @@ export default function P2pPriceMonitor() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        setLoading(true);
+        // La primera vez no ponemos el loader para evitar parpadeos
+        if (priceData.length === 0) {
+            setLoading(true);
+        }
         const response = await fetch('https://criptoya.com/api/USDT/BOB/1');
         if (!response.ok) {
           throw new Error('La respuesta de la red no fue correcta');
@@ -81,60 +85,80 @@ export default function P2pPriceMonitor() {
     const interval = setInterval(fetchData, 60000); // Actualizar cada minuto
 
     return () => clearInterval(interval); // Limpiar al desmontar el componente
-  }, []);
+  }, [priceData.length]);
+
+  const sortedBuyData = useMemo(() => {
+    return [...priceData].sort((a, b) => (b.buyPrice || 0) - (a.buyPrice || 0));
+  }, [priceData]);
+
+  const sortedSellData = useMemo(() => {
+    return [...priceData].sort((a, b) => (a.sellPrice || Infinity) - (b.sellPrice || Infinity));
+  }, [priceData]);
+
+  const renderTableRows = (data: P2PPrice[], type: 'buy' | 'sell') => {
+    return data.map((item, index) => (
+      <TableRow key={item.platform}>
+        <TableCell>
+          <div className="flex items-center gap-3">
+              <Image
+                  src={item.platformLogo}
+                  alt={`${item.platform} logo`}
+                  width={24}
+                  height={24}
+                  className="rounded-full"
+              />
+              <div>
+                  <div className="font-medium">{item.platform}</div>
+                  <Badge variant="outline" className="font-mono">{item.asset}</Badge>
+              </div>
+          </div>
+        </TableCell>
+        <TableCell className="text-right font-mono text-lg">
+          <span className={`flex items-center justify-end gap-2 ${type === 'buy' ? 'text-green-400' : 'text-red-400'}`}>
+            {type === 'buy' ? item.buyPrice?.toFixed(2) : item.sellPrice?.toFixed(2)}
+            {index === 0 && (type === 'buy' ? <ArrowUp className="h-4 w-4" /> : <ArrowDown className="h-4 w-4" />)}
+          </span>
+        </TableCell>
+      </TableRow>
+    ));
+  }
 
   return (
-    <Card>
-      <CardContent className="p-0">
-        <div className="overflow-x-auto">
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead>Plataforma / Activo</TableHead>
-                <TableHead>Métodos de Pago</TableHead>
-                <TableHead className="text-right">Precio Compra (BOB)</TableHead>
-                <TableHead className="text-right">Precio Venta (BOB)</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {loading ? (
-                <TableRow>
-                  <TableCell colSpan={4} className="text-center">
-                    Cargando datos...
-                  </TableCell>
-                </TableRow>
-              ) : (
-                priceData.map((data) => (
-                  <TableRow key={data.platform}>
-                    <TableCell>
-                      <div className="flex items-center gap-3">
-                          <Image
-                              src={data.platformLogo}
-                              alt={`${data.platform} logo`}
-                              width={24}
-                              height={24}
-                              className="rounded-full"
-                          />
-                          <div>
-                              <div className="font-medium">{data.platform}</div>
-                              <Badge variant="outline" className="font-mono">{data.asset}</Badge>
-                          </div>
-                      </div>
-                    </TableCell>
-                    <TableCell>{data.paymentMethod}</TableCell>
-                    <TableCell className="text-right font-mono text-lg">
-                      {data.buyPrice !== null ? data.buyPrice.toFixed(2) : <span>-</span>}
-                    </TableCell>
-                    <TableCell className="text-right font-mono text-lg">
-                      {data.sellPrice !== null ? data.sellPrice.toFixed(2) : <span>-</span>}
-                    </TableCell>
-                  </TableRow>
-                ))
-              )}
-            </TableBody>
-          </Table>
-        </div>
-      </CardContent>
-    </Card>
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <Card>
+            <CardContent className="p-0">
+                <Table>
+                    <TableHeader>
+                        <TableRow>
+                            <TableHead>Plataforma</TableHead>
+                            <TableHead className="text-right text-green-400">Mejor Precio de Compra (BOB)</TableHead>
+                        </TableRow>
+                    </TableHeader>
+                    <TableBody>
+                        {loading ? (
+                            <TableRow><TableCell colSpan={2} className="text-center">Cargando...</TableCell></TableRow>
+                        ) : renderTableRows(sortedBuyData, 'buy')}
+                    </TableBody>
+                </Table>
+            </CardContent>
+        </Card>
+        <Card>
+            <CardContent className="p-0">
+                <Table>
+                    <TableHeader>
+                        <TableRow>
+                            <TableHead>Plataforma</TableHead>
+                            <TableHead className="text-right text-red-400">Mejor Precio de Venta (BOB)</TableHead>
+                        </TableRow>
+                    </TableHeader>
+                    <TableBody>
+                        {loading ? (
+                            <TableRow><TableCell colSpan={2} className="text-center">Cargando...</TableCell></TableRow>
+                        ) : renderTableRows(sortedSellData, 'sell')}
+                    </TableBody>
+                </Table>
+            </CardContent>
+        </Card>
+    </div>
   );
 }

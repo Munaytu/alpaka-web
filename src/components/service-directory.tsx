@@ -8,7 +8,6 @@ import Link from "next/link";
 const services = [
   {
     name: "Binance",
-    logo: "https://placehold.co/64x64.png",
     description: "El exchange más grande del mundo, con un mercado P2P muy líquido para comprar y vender cripto con bolivianos (BOB).",
     tags: ["Exchange", "P2P", "Wallet"],
     url: "https://www.binance.com/",
@@ -16,7 +15,6 @@ const services = [
   },
   {
     name: "Bybit",
-    logo: "https://placehold.co/64x64.png",
     description: "Una alternativa popular a Binance, también con un mercado P2P funcional en Bolivia. Suele tener comisiones competitivas.",
     tags: ["Exchange", "P2P", "Derivados"],
     url: "https://www.bybit.com/",
@@ -24,7 +22,6 @@ const services = [
   },
   {
     name: "Trezor",
-    logo: "https://placehold.co/64x64.png",
     description: "Una billetera de hardware (hardware wallet) para máxima seguridad. Permite guardar tus criptomonedas fuera de línea.",
     tags: ["Hardware Wallet", "Seguridad"],
     url: "https://trezor.io/",
@@ -32,7 +29,6 @@ const services = [
   },
     {
     name: "Ledger",
-    logo: "https://placehold.co/64x64.png",
     description: "Otra marca líder de hardware wallets. Competidor directo de Trezor, ofrece una alta seguridad para tus activos.",
     tags: ["Hardware Wallet", "Seguridad"],
     url: "https://www.ledger.com/",
@@ -43,37 +39,42 @@ const services = [
 export default function ServiceDirectory() {
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-      {services.map((service) => (
-        <Card key={service.name} className="flex flex-col">
-          <CardHeader>
-            <div className="flex items-start justify-between">
-                <Image src={service.logo} alt={`${service.name} logo`} width={48} height={48} className="rounded-lg" data-ai-hint="crypto service"/>
-                {service.verified && (
-                    <Badge variant="outline" className="border-primary/50 text-primary">
-                        <CheckCircle className="mr-1 h-3 w-3" />
-                        Verificado
-                    </Badge>
-                )}
-            </div>
-            <CardTitle className="pt-4">{service.name}</CardTitle>
-          </CardHeader>
-          <CardContent className="flex-grow">
-            <CardDescription>{service.description}</CardDescription>
-            <div className="flex flex-wrap gap-2 pt-4">
-              {service.tags.map((tag) => (
-                <Badge key={tag} variant="secondary">{tag}</Badge>
-              ))}
-            </div>
-          </CardContent>
-          <CardFooter>
-            <Button asChild variant="outline" className="w-full">
-              <Link href={service.url} target="_blank" rel="noopener noreferrer">
-                Visitar Sitio <ArrowUpRight className="ml-2 h-4 w-4" />
-              </Link>
-            </Button>
-          </CardFooter>
-        </Card>
-      ))}
+      {services.map((service) => {
+        const domain = new URL(service.url).hostname;
+        const logoUrl = `https://www.google.com/s2/favicons?domain=${domain}`;
+
+        return (
+            <Card key={service.name} className="flex flex-col">
+            <CardHeader>
+                <div className="flex items-start justify-between">
+                    <Image src={logoUrl} alt={`${service.name} logo`} width={48} height={48} className="rounded-lg" />
+                    {service.verified && (
+                        <Badge variant="outline" className="border-primary/50 text-primary">
+                            <CheckCircle className="mr-1 h-3 w-3" />
+                            Verificado
+                        </Badge>
+                    )}
+                </div>
+                <CardTitle className="pt-4">{service.name}</CardTitle>
+            </CardHeader>
+            <CardContent className="flex-grow">
+                <CardDescription>{service.description}</CardDescription>
+                <div className="flex flex-wrap gap-2 pt-4">
+                {service.tags.map((tag) => (
+                    <Badge key={tag} variant="secondary">{tag}</Badge>
+                ))}
+                </div>
+            </CardContent>
+            <CardFooter>
+                <Button asChild variant="outline" className="w-full">
+                <Link href={service.url} target="_blank" rel="noopener noreferrer">
+                    Visitar Sitio <ArrowUpRight className="ml-2 h-4 w-4" />
+                </Link>
+                </Button>
+            </CardFooter>
+            </Card>
+        );
+    })}
     </div>
   );
 }

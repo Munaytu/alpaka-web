@@ -1,3 +1,4 @@
+
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
@@ -7,75 +8,36 @@ import { Button } from '@/components/ui/button';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import Link from 'next/link';
+import Image from 'next/image';
 
 interface NewsArticle {
     article_id: string;
     title: string;
     link: string;
     source_id: string;
-    source_url: string;
     source_icon: string;
-    source_priority: number;
-    keywords: string[];
-    creator: string[];
-    image_url: string;
-    video_url: string;
     description: string;
     pubDate: string;
-    pubDateTZ: string;
-    content: string;
-    country: string[];
-    category: string[];
-    language: string;
-    ai_tag: string[];
-    sentiment: string;
-    sentiment_stats: {
-        positive: number;
-        neutral: number;
-        negative: number;
-    };
-    ai_region: string[];
-    ai_org: string[];
-    duplicate: boolean;
+    image_url: string;
 }
 
-interface Props {}
-
-export default function NewsList({ }: Props) {
+export default function NewsList() {
     const [news, setNews] = useState<NewsArticle[]>([]);
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
-
-    const newsdataIoApiKey = process.env.NEXT_PUBLIC_NEWSDATA_IO_API_KEY;
-    const newsapiOrgApiKey = process.env.NEXT_PUBLIC_NEWSAPI_ORG_API_KEY;
 
     useEffect(() => {
         async function getNews() {
             setIsLoading(true);
             setError(null);
             try {
-                // Fetch news from newsdata.io
-                const newsdataIoUrl = `https://newsdata.io/api/1/latest?apikey=${newsdataIoApiKey}&country=bo&q=crypto bitcoin`;
-                const newsdataIoResponse = await fetch(newsdataIoUrl);
-                if (!newsdataIoResponse.ok) {
-                    throw new Error(`HTTP error! status: ${newsdataIoResponse.status}`);
+                const response = await fetch('/api/news');
+                if (!response.ok) {
+                    const errorData = await response.json();
+                    throw new Error(errorData.error || `HTTP error! status: ${response.status}`);
                 }
-                const newsdataIoData = await newsdataIoResponse.json();
-                const newsdataIoArticles = newsdataIoData.results || [];
-
-                // Fetch news from newsapi.org
-                const newsapiOrgUrl = `https://newsapi.org/v2/everything?apiKey=${newsapiOrgApiKey}&q=bolivia crypto bitcoin`;
-                const newsapiOrgResponse = await fetch(newsapiOrgUrl);
-                if (!newsapiOrgResponse.ok) {
-                    throw new Error(`HTTP error! status: ${newsapiOrgResponse.status}`);
-                }
-                const newsapiOrgData = await newsapiOrgResponse.json();
-                const newsapiOrgArticles = newsapiOrgData.articles || [];
-
-                // Interleave the articles
-                const interleavedNews = interleaveArrays(newsdataIoArticles, newsapiOrgArticles);
-
-                setNews(interleavedNews);
+                const data = await response.json();
+                setNews(data);
             } catch (e: any) {
                 setError(e.message || "Failed to fetch news");
             } finally {
@@ -84,29 +46,26 @@ export default function NewsList({ }: Props) {
         }
 
         getNews();
-    }, [newsdataIoApiKey, newsapiOrgApiKey]);
-
-    // Function to interleave two arrays
-    function interleaveArrays(...arrays: (NewsArticle | any)[][]): NewsArticle[] {
-        const result: any[] = [];
-        const maxLength = Math.max(...arrays.map(arr => arr.length));
-        for (let i = 0; i < maxLength; i++) {
-            for (const arr of arrays) {
-                if (i < arr.length) {
-                    result.push(arr[i]);
-                }
-            }
-        }
-        return result;
-    }
+    }, []);
 
     if (isLoading) {
         return (
-            <div className="space-y-4">
-                <Skeleton className="h-4 w-full" />
-                <Skeleton className="h-4 w-full" />
-                <Skeleton className="h-4 w-5/6" />
-                <Skeleton className="h-4 w-3/4" />
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {Array.from({ length: 6 }).map((_, index) => (
+                    <Card key={index} className="flex flex-col">
+                        <CardHeader>
+                            <Skeleton className="h-40 w-full rounded-t-lg" />
+                        </CardHeader>
+                        <CardContent className="flex-grow space-y-2">
+                            <Skeleton className="h-4 w-full" />
+                            <Skeleton className="h-4 w-5/6" />
+                            <Skeleton className="h-4 w-3/4" />
+                        </CardContent>
+                        <CardFooter>
+                             <Skeleton className="h-8 w-1/2" />
+                        </CardFooter>
+                    </Card>
+                ))}
             </div>
         );
     }
@@ -114,26 +73,47 @@ export default function NewsList({ }: Props) {
     if (error) {
         return (
             <Alert variant="destructive">
-                <AlertTitle>¡Alerta! El sistema está bajo ataque centralizado</AlertTitle>
-                <AlertDescription>La Matrix ha intentado ocultarnos la verdad: {error}</AlertDescription>
+                <AlertTitle>Error al Cargar Noticias</AlertTitle>
+                <AlertDescription>{error}</AlertDescription>
             </Alert>
         );
     }
 
     return (
-        <div className="space-y-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {news.map((article) => (
-                <Card key={article.article_id}>
-                    <CardHeader>
-                        <CardTitle>{article.title}</CardTitle>
+                <Card key={article.article_id} className="flex flex-col overflow-hidden">
+                    <CardHeader className="p-0">
+                        {article.image_url ? (
+                            <Image
+                                src={article.image_url}
+                                alt={article.title}
+                                width={400}
+                                height={225}
+                                className="w-full h-40 object-cover"
+                            />
+                        ) : (
+                            <div className="w-full h-40 bg-gray-700 flex items-center justify-center">
+                                <span className="text-gray-400">Sin Imagen</span>
+                            </div>
+                        )}
                     </CardHeader>
-                    <CardContent>
-                        <p className="text-muted-foreground">{article.description}</p>
+                    <CardContent className="flex-grow p-4 space-y-2">
+                        <CardTitle className="text-lg leading-tight">{article.title}</CardTitle>
+                        <p className="text-muted-foreground text-sm line-clamp-3">
+                            {article.description}
+                        </p>
                     </CardContent>
-                    <CardFooter>
+                    <CardFooter className="p-4 bg-gray-800/50 flex justify-between items-center">
+                        <div className="flex items-center gap-2">
+                            {article.source_icon && 
+                                <Image src={article.source_icon} alt={article.source_id} width={16} height={16} className="rounded-full"/>
+                            }
+                            <span className="text-xs text-muted-foreground uppercase">{article.source_id}</span>
+                        </div>
                         {article.link && (
-                            <Button variant="link" asChild className="p-0">
-                                <Link href={article.link}>Adentrarse en la madriguera del conejo</Link>
+                            <Button variant="secondary" size="sm" asChild>
+                                <Link href={article.link} target="_blank" rel="noopener noreferrer">Leer Más</Link>
                             </Button>
                         )}
                     </CardFooter>
