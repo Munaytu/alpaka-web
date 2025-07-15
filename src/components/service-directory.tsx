@@ -34,6 +34,34 @@ const services = [
     url: "https://www.ledger.com/",
     verified: true,
   },
+  {
+    name: "Coinbase",
+    description: "Uno de los exchanges más antiguos y confiables. Permite la compra de criptomonedas con tarjeta de crédito o débito.",
+    tags: ["Exchange", "Wallet", "Principiantes"],
+    url: "https://www.coinbase.com/",
+    verified: true,
+  },
+  {
+    name: "Kraken",
+    description: "Reconocido por sus robustas medidas de seguridad y una amplia variedad de criptoactivos.",
+    tags: ["Exchange", "Seguridad", "Trading"],
+    url: "https://www.kraken.com/",
+    verified: true,
+  },
+  {
+    name: "Bit2Me",
+    description: "Plataforma de origen español con una interfaz sencilla y una variedad de servicios además de la compraventa.",
+    tags: ["Exchange", "Wallet", "Servicios"],
+    url: "https://bit2me.com/",
+    verified: true,
+  },
+  {
+    name: "El Dorado P2P",
+    description: "Alternativa local enfocada en el mercado latinoamericano, facilitando la compraventa de cripto con bancos locales.",
+    tags: ["P2P", "Local", "USDT"],
+    url: "https://eldorado.io/",
+    verified: true,
+  },
 ];
 
 export default function ServiceDirectory() {

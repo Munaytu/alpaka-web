@@ -89,6 +89,27 @@ const CultureAndCommunity: React.FC = () => {
             </AccordionContent>
           </AccordionItem>
 
+          <AccordionItem value="item-5">
+            <AccordionTrigger className="text-xl font-semibold">3.5 Comunidad Boliviana: Creadores de Contenido</AccordionTrigger>
+            <AccordionContent className="p-4 bg-gray-700 rounded-md">
+              <p className="mb-4">
+                La comunidad de Bitcoin en Bolivia está creciendo. Aquí tienes algunos creadores de contenido en TikTok que comparten noticias, tutoriales y análisis sobre el ecosistema cripto en el país:
+              </p>
+              <ul className="list-disc list-inside space-y-2">
+                <li><a href="https://www.tiktok.com/@arsac944" target="_blank" rel="noopener noreferrer" className="text-blue-400 hover:text-blue-300">@arsac944</a></li>
+                <li><a href="https://www.tiktok.com/@alvic595" target="_blank" rel="noopener noreferrer" className="text-blue-400 hover:text-blue-300">@alvic595</a></li>
+                <li><a href="https://www.tiktok.com/@noe.cripto.bolivia" target="_blank" rel="noopener noreferrer" className="text-blue-400 hover:text-blue-300">@noe.cripto.bolivia</a></li>
+                <li><a href="https://www.tiktok.com/@criptopepe1" target="_blank" rel="noopener noreferrer" className="text-blue-400 hover:text-blue-300">@criptopepe1</a></li>
+                <li><a href="https://www.tiktok.com/@luiscordovafinanzas" target="_blank" rel="noopener noreferrer" className="text-blue-400 hover:text-blue-300">@luiscordovafinanzas</a></li>
+                <li><a href="https://www.tiktok.com/@marielabaldivieso" target="_blank" rel="noopener noreferrer" className="text-blue-400 hover:text-blue-300">@marielabaldivieso</a></li>
+                <li><a href="https://www.tiktok.com/@soy.alessandro_bo" target="_blank" rel="noopener noreferrer" className="text-blue-400 hover:text-blue-300">@soy.alessandro_bo</a></li>
+                <li><a href="https://www.tiktok.com/@portu_geek" target="_blank" rel="noopener noreferrer" className="text-blue-400 hover:text-blue-300">@portu_geek</a></li>
+                <li><a href="https://www.tiktok.com/@rickportaciones" target="_blank" rel="noopener noreferrer" className="text-blue-400 hover:text-blue-300">@rickportaciones</a></li>
+                <li><a href="https://www.tiktok.com/@cristalcito.emprende_" target="_blank" rel="noopener noreferrer" className="text-blue-400 hover:text-blue-300">@cristalcito.emprende_</a></li>
+              </ul>
+            </AccordionContent>
+          </AccordionItem>
+
         </Accordion>
 
         <div className="mt-8">

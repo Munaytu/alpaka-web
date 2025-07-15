@@ -39,7 +39,7 @@ export default function DashboardLayout({
 
   const navItems = [
     { href: "/dashboard", label: "Monitor P2P", icon: LayoutDashboard },
-    { href: "/dashboard/news", label: "Noticias", icon: Newspaper },
+    
     { href: "/dashboard/education", label: "Alpaka Educa", icon: GraduationCap },
     { href: "/dashboard/services", label: "Directorio", icon: List },
   ];
