@@ -98,11 +98,21 @@ export default function P2pPriceMonitor() {
         }
 
         if (formattedUsdtData.length > 0) {
-            const bestBuyPrice = Math.max(...formattedUsdtData.map(e => e.buyPrice || 0));
-            const validAsks = formattedUsdtData.map(e => e.sellPrice || 0).filter(price => price > 0);
-            const bestSellPrice = Math.min(...validAsks);
-            setUsdtRefBuyPrice(bestBuyPrice);
-            setUsdtRefSellPrice(bestSellPrice);
+            const binanceData = formattedUsdtData.find(e => e.platform === 'binance P2P');
+            if (binanceData) {
+                if (binanceData.buyPrice !== null && binanceData.sellPrice !== null) {
+                    setUsdtRefBuyPrice(binanceData.buyPrice);
+                    setUsdtRefSellPrice(binanceData.sellPrice);
+                } else {
+                    console.error('Error: Binance buyPrice or sellPrice is null');
+                    setUsdtRefBuyPrice(null);
+                    setUsdtRefSellPrice(null);
+                }
+            } else {
+                console.error('Error: Binance data not found');
+                setUsdtRefBuyPrice(null);
+                setUsdtRefSellPrice(null);
+            }
         }
 
       } catch (error) {
