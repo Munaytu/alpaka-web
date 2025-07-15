@@ -8,6 +8,7 @@ import {
   GraduationCap,
   List,
   Mountain,
+  CircleDollarSign,
 } from "lucide-react";
 
 import {
@@ -39,10 +40,10 @@ export default function DashboardLayout({
 
   const navItems = [
     { href: "/dashboard", label: "Monitor P2P", icon: LayoutDashboard },
-    
     { href: "/dashboard/education", label: "Alpaka Educa", icon: GraduationCap },
     { href: "/dashboard/services", label: "Directorio", icon: List },
     { href: "https://t.me/ComunidadCryptoBolivia", label: "Comunidad", icon: Newspaper, target: "_blank" },
+    { href: "/dashboard/alpaka", label: "$ALPAKA Token", icon: CircleDollarSign },
   ];
 
   const currentNavItem = navItems.find(item => pathname.startsWith(item.href));
