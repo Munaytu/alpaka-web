@@ -42,6 +42,7 @@ export default function DashboardLayout({
     
     { href: "/dashboard/education", label: "Alpaka Educa", icon: GraduationCap },
     { href: "/dashboard/services", label: "Directorio", icon: List },
+    { href: "https://t.me/ComunidadCryptoBolivia", label: "Comunidad", icon: Newspaper, target: "_blank" },
   ];
 
   const currentNavItem = navItems.find(item => pathname.startsWith(item.href));
