@@ -1,7 +1,12 @@
-
 import React from 'react';
+import Image from 'next/image';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
+
+const videos = [
+  { title: 'La Historia del Dinero', url: 'https://www.youtube.com/watch?v=YA5YlJJLpNE' },
+  { title: 'Halving de Bitcoin Explicado', url: 'https://youtu.be/Yn8WGaO__ak' },
+];
 
 const HistoryOfBitcoin: React.FC = () => {
   return (
@@ -10,6 +15,15 @@ const HistoryOfBitcoin: React.FC = () => {
         <CardTitle className="text-3xl font-bold">La Saga de Bitcoin: Historia y Hitos Clave</CardTitle>
       </CardHeader>
       <CardContent>
+        <div className="mb-6">
+          <Image 
+            src="/images/escapando de inflacion.jpg" 
+            alt="Escapando de la inflación con Bitcoin" 
+            width={800} 
+            height={450} 
+            className="rounded-lg object-cover"
+          />
+        </div>
         <Accordion type="single" collapsible className="w-full">
 
           <AccordionItem value="item-1">
@@ -60,6 +74,24 @@ const HistoryOfBitcoin: React.FC = () => {
           </AccordionItem>
 
         </Accordion>
+
+        <div className="mt-8">
+          <h3 className="text-2xl font-semibold mb-4 text-center">Videos de Apoyo</h3>
+          <ul className="space-y-3">
+            {videos.map((video) => (
+              <li key={video.url}>
+                <a 
+                  href={video.url} 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="text-blue-400 hover:text-blue-300 hover:underline transition-colors"
+                >
+                  {video.title}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
       </CardContent>
     </Card>
   );

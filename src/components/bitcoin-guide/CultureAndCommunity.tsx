@@ -1,7 +1,15 @@
-
 import React from 'react';
+import Image from 'next/image';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
+
+const videos = [
+  { title: 'El Futuro de Bitcoin', url: 'https://www.youtube.com/watch?v=EVHtHXof1dc' },
+  { title: 'Análisis Técnico de Bitcoin para Principiantes', url: 'https://www.youtube.com/watch?v=gQ4Scmeiopk' },
+  { title: 'Filosofía de Bitcoin: Soberanía Financiera', url: 'https://www.youtube.com/watch?v=SXJwn9LPuoY' },
+  { title: 'Nodos de Bitcoin: La Columna Vertebral de la Red', url: 'https://www.youtube.com/watch?v=jfWCms4SI9g' },
+  { title: 'El Impacto Social de Bitcoin', url: 'https://www.youtube.com/watch?v=FmtyY2hmg04' },
+];
 
 const CultureAndCommunity: React.FC = () => {
   return (
@@ -10,6 +18,15 @@ const CultureAndCommunity: React.FC = () => {
         <CardTitle className="text-3xl font-bold">Cultura y Comunidad: El Ecosistema Humano</CardTitle>
       </CardHeader>
       <CardContent>
+        <div className="mb-6">
+          <Image 
+            src="/images/alpca tothemoon.jpg" 
+            alt="Alpaca yendo a la luna con Bitcoin" 
+            width={800} 
+            height={450} 
+            className="rounded-lg object-cover"
+          />
+        </div>
         <Accordion type="single" collapsible className="w-full">
 
           <AccordionItem value="item-1">
@@ -73,6 +90,24 @@ const CultureAndCommunity: React.FC = () => {
           </AccordionItem>
 
         </Accordion>
+
+        <div className="mt-8">
+          <h3 className="text-2xl font-semibold mb-4 text-center">Videos de Apoyo</h3>
+          <ul className="space-y-3">
+            {videos.map((video) => (
+              <li key={video.url}>
+                <a 
+                  href={video.url} 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="text-blue-400 hover:text-blue-300 hover:underline transition-colors"
+                >
+                  {video.title}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
       </CardContent>
     </Card>
   );

@@ -1,7 +1,13 @@
-
 import React from 'react';
+import Image from 'next/image';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
+
+const videos = [
+  { title: 'Wallets de Bitcoin: Tu Banco Personal', url: 'https://www.youtube.com/watch?v=qdJLx8zvAAI' },
+  { title: 'Seguridad en Bitcoin: Protege tus Fondos', url: 'https://www.youtube.com/watch?v=u1EsMdY8o4I' },
+  { title: 'Regulación de Bitcoin en el Mundo', url: 'https://www.youtube.com/watch?v=C-3aYnhF6Io' },
+];
 
 const RisksAndSecurity: React.FC = () => {
   return (
@@ -10,7 +16,15 @@ const RisksAndSecurity: React.FC = () => {
         <CardTitle className="text-3xl font-bold">Riesgos y Seguridad: Protégete</CardTitle>
       </CardHeader>
       <CardContent className="space-y-6">
-        
+        <div className="mb-6">
+          <Image 
+            src="/images/alpca con billetra fria.jpg" 
+            alt="Alpaca con una billetera fría de Bitcoin" 
+            width={800} 
+            height={450} 
+            className="rounded-lg object-cover"
+          />
+        </div>
         <Alert variant="destructive" className="bg-red-900 border-red-700">
           <AlertTitle className="text-xl font-bold">Riesgos Fundamentales</AlertTitle>
           <AlertDescription>
@@ -39,6 +53,23 @@ const RisksAndSecurity: React.FC = () => {
           </ol>
         </Card>
 
+        <div className="mt-8">
+          <h3 className="text-2xl font-semibold mb-4 text-center">Videos de Apoyo</h3>
+          <ul className="space-y-3">
+            {videos.map((video) => (
+              <li key={video.url}>
+                <a 
+                  href={video.url} 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="text-blue-400 hover:text-blue-300 hover:underline transition-colors"
+                >
+                  {video.title}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
       </CardContent>
     </Card>
   );

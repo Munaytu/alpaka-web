@@ -1,7 +1,15 @@
-
 import React from 'react';
+import Image from 'next/image';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
+
+const videos = [
+  { title: 'Bitcoin: La Solución a la Inflación', url: 'https://www.youtube.com/watch?v=1bFSolYm72I' },
+  { title: 'Cómo Comprar Bitcoin de Forma Segura', url: 'https://www.youtube.com/watch?v=aaAvHic3UOs' },
+  { title: 'Casos de Uso Reales de Bitcoin', url: 'https://www.youtube.com/watch?v=BudS3g47woI' },
+  { title: 'La Red Lightning de Bitcoin', url: 'https://www.youtube.com/watch?v=Ow376vKIBXE' },
+  { title: 'Cómo Minar Bitcoin', url: 'https://www.youtube.com/watch?v=zBT3k3u-3Js' },
+];
 
 const UsesAndPractice: React.FC = () => {
   return (
@@ -10,7 +18,15 @@ const UsesAndPractice: React.FC = () => {
         <CardTitle className="text-3xl font-bold">Usos y Práctica: ¿Cómo lo Uso?</CardTitle>
       </CardHeader>
       <CardContent className="space-y-6">
-        
+        <div className="mb-6">
+          <Image 
+            src="/images/alpaca con moneda de bitcoin.png" 
+            alt="Alpaca con una moneda de Bitcoin" 
+            width={800} 
+            height={450} 
+            className="rounded-lg object-cover"
+          />
+        </div>
         <div>
           <h3 className="text-2xl font-semibold mb-3">Ventajas Potenciales de Bitcoin</h3>
           <ul className="list-disc list-inside space-y-2">
@@ -47,6 +63,23 @@ const UsesAndPractice: React.FC = () => {
           </Button>
         </div>
 
+        <div className="mt-8">
+          <h3 className="text-2xl font-semibold mb-4 text-center">Videos de Apoyo</h3>
+          <ul className="space-y-3">
+            {videos.map((video) => (
+              <li key={video.url}>
+                <a 
+                  href={video.url} 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="text-blue-400 hover:text-blue-300 hover:underline transition-colors"
+                >
+                  {video.title}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
       </CardContent>
     </Card>
   );
