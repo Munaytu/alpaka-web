@@ -4,7 +4,7 @@
 
 ## **1\. ¿Qué es $ALPAKA?**
 
-$ALPAKA es un token meme boliviano con una misión dual: ser un símbolo cultural divertido y una herramienta de empoderamiento financiero. Construido sobre la **BNB Smart Chain**, es un token deflacionario y seguro que busca fortalecer la liquidez y la participación comunitaria.
+$ALPAKA es un token meme boliviano con una misión dual: ser un símbolo cultural divertido y una herramienta de empoderamiento financiero. Construido sobre la **BNB Smart Chain**, implementa un innovador modelo de **curva de bonos (bonding curve)**, donde el precio se ajusta dinámicamente con cada compra y venta, asegurando liquidez y un descubrimiento de precios continuo.
 
 ## **2\. La Visión: Soberanía Financiera Andina**
 
@@ -20,13 +20,15 @@ Un ecosistema de dos pilares interconectados:
 
 ### **A. El Token $ALPAKA:**
 
+* **Curva de Bonos:** El precio de $ALPAKA se determina por su oferta circulante; aumenta al comprar y disminuye al vender. Los tokens se acuñan al comprar y se queman al vender.  
 * **Gobernanza:** Permite a los tenedores participar en las decisiones futuras del proyecto.  
 * **Recompensas Comunitarias:** Incentiva a los usuarios activos y contribuyentes del Alpaka Hub con tokens $ALPAKA por:  
   * Uso de la plataforma.  
   * Creación y consumo de contenido educativo.  
   * Participación en la comunidad y reporte de mejoras.  
+  * Programas de Influencers y Embajadores.  
   * Tareas dinámicas y gamificación.  
-* **Deflacionario:** Un impuesto del 2% por transacción se distribuye: 1% a liquidez (bloqueo automático) y 1% a la tesorería del ecosistema para desarrollo y marketing.
+* **Financiamiento:** Los fondos para el desarrollo del proyecto y las recompensas provienen de los BNB acumulados en el contrato de la curva de bonos a través de las compras.
 
 ### **B. Alpaka Hub (La Plataforma Web):**
 
@@ -41,18 +43,14 @@ El "Bloomberg" del P2P boliviano, una web pública y gratuita con:
 
 ## **5\. Tokenomics (Resumen)**
 
-* **Suministro Total:** 1,000,000,000,000 (1 Trillón) ALPAKA.  
-* **Distribución Inicial:**  
-  * 40% Quema Inicial  
-  * 20% Preventa Pública  
-  * 25% Liquidez en PancakeSwap (bloqueada por 2 años)  
-  * 10% Tesorería del Ecosistema (con vesting)  
-  * 5% Equipo (con vesting 2-3 años)
+* **Suministro Total:** Dinámico (crece y decrece con las transacciones).  
+* **Precio:** Determinado por una curva de bonos (ej. precio \= precio\_inicial \+ (tokens\_en\_circulación \* incremento)).  
+* **Financiamiento del Proyecto:** Los BNB acumulados en el contrato de la curva de bonos son retirados por el propietario para financiar el desarrollo, marketing, y recompensas.
 
 ## **6\. Hoja de Ruta (Hitos Clave)**
 
-* **Fase 1 (Q3 2025):** Auditoría de Contrato, Lanzamiento de White Paper y Web, Preventa, Lanzamiento en PancakeSwap.  
-* **Fase 2 (Q4 2025 – Q1 2026):** Lanzamiento de Alpaka Hub (monitor P2P), Alpaka Educa, Sistema de Recompensas, Listado en CoinGecko/CoinMarketCap.  
+* **Fase 1 (Q3 2025):** Auditoría de Contrato, Lanzamiento de White Paper y Web, Apertura de compra/venta vía curva de bonos.  
+* **Fase 2 (Q4 2025 – Q1 2026):** Lanzamiento de Alpaka Hub (monitor P2P), Alpaka Educa, Sistema de Recompensas, Programa de Influencers, Listado en CoinGecko/CoinMarketCap.  
 * **Fase 3 (2026):** Lanzamiento de Alpaka Wallet, Integración IA, Votaciones de Gobernanza.  
 * **Fase 4 (Largo Plazo):** Transición a DAO, Investigación de Stablecoin Boliviana.
 

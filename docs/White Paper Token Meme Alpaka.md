@@ -1,14 +1,14 @@
 # **White Paper: El Token Meme Alpaka ($ALPAKA)**
 
-*(Versión 2.0 \- Julio 2025\)*
+*(Versión 2.2 \- Julio 2025\)*
 
 **Tagline:** Tejiendo la Soberanía Financiera de Bolivia. Un Byte a la Vez.
 
 ## **1\. Resumen Ejecutivo (Abstract)**
 
-El Token Alpaka ($ALPAKA) es un proyecto boliviano de criptomoneda que fusiona el espíritu cultural de un meme con una misión de empoderamiento financiero. Desarrollado sobre la **BNB Smart Chain (BEP-20)**, $ALPAKA es un token deflacionario y seguro, cuyo contrato inteligente está diseñado para fortalecer su liquidez y sostenibilidad con cada transacción.
+El Token Alpaka ($ALPAKA) es un proyecto boliviano de criptomoneda que fusiona el espíritu cultural de un meme con una misión de empoderamiento financiero. Desarrollado sobre la **BNB Smart Chain (BEP-20)**, $ALPAKA implementa un innovador modelo de **curva de bonos (bonding curve)**. Este mecanismo permite una emisión y quema dinámica de tokens, donde el precio de $ALPAKA se ajusta automáticamente en función de la oferta circulante. Cada compra aumenta el precio y la oferta, mientras que cada venta reduce ambos, garantizando liquidez continua y descubrimiento de precios sin necesidad de pools de liquidez tradicionales.
 
-La utilidad central de $ALPAKA radica en su función como pilar del ecosistema **Alpaka Hub**: la primera plataforma integral en Bolivia que ofrece información en tiempo real sobre el mercado P2P (persona a persona) de criptomonedas, noticias curadas y guías educativas. Además, $ALPAKA servirá como el principal mecanismo de recompensa para los miembros más activos y contribuyentes de la comunidad, incentivando la participación, la educación y el crecimiento colectivo del ecosistema.
+La utilidad central de $ALPAKA radica en su función como pilar del ecosistema **Alpaka Hub**: la primera plataforma integral en Bolivia que ofrece información en tiempo real sobre el mercado P2P (persona a persona) de criptomonedas, noticias curadas y guías educativas. Además, $ALPAKA servirá como el principal mecanismo de recompensa para los miembros más activos y contribuyentes de la comunidad, incentivando la participación, la educación y el crecimiento colectivo del ecosistema. Los fondos para el desarrollo del proyecto, marketing, y programas de recompensas (incluyendo influencers y embajadores) provendrán directamente de los BNB acumulados en el contrato de la curva de bonos.
 
 Nuestra filosofía se arraiga en los principios fundamentales de Bitcoin: descentralización, soberanía individual y educación financiera. $ALPAKA trasciende la noción de un simple token; es un movimiento que busca empoderar a los bolivianos para que tomen el control de su economía a través del conocimiento y la tecnología blockchain.
 
@@ -36,7 +36,13 @@ Nuestra propuesta es un ecosistema simbiótico compuesto por dos elementos inter
 
 ### **A. El Token $ALPAKA (El Corazón de la Comunidad y la Gobernanza)**
 
-$ALPAKA es un token BEP-20 desplegado en la BNB Smart Chain, diseñado con un enfoque en la seguridad, transparencia y beneficio mutuo para sus tenedores. Su propósito fundamental es ser el vehículo de la comunidad, la llave para la gobernanza descentralizada de la plataforma y un mecanismo de incentivo.
+$ALPAKA es un token BEP-20 desplegado en la BNB Smart Chain, diseñado con un enfoque en la seguridad, transparencia y beneficio mutuo para sus tenedores a través de un modelo de **curva de bonos**. Su propósito fundamental es ser el vehículo de la comunidad, la llave para la gobernanza descentralizada de la plataforma y un mecanismo de incentivo.
+
+#### **Mecanismo de la Curva de Bonos:**
+
+* **Precio Dinámico:** El precio de $ALPAKA no es fijo, sino que aumenta con cada compra y disminuye con cada venta, siguiendo una fórmula matemática predefinida (ej. lineal o exponencial). Esto asegura liquidez constante y un descubrimiento de precios orgánico.  
+* **Emisión/Quema Continua:** Los tokens $ALPAKA se acuñan (mint) cuando un usuario compra con BNB y se queman (burn) cuando un usuario vende, eliminando la necesidad de pools de liquidez externos como PancakeSwap para la liquidez principal.  
+* **Financiamiento del Ecosistema:** Los BNB acumulados en el contrato de la curva de bonos a través de las compras son la fuente principal de financiación para el desarrollo del Alpaka Hub, marketing, programas de recompensas y operaciones del equipo.
 
 #### **Sistema de Recompensas Comunitarias**
 
@@ -50,11 +56,12 @@ Inspirado en modelos exitosos de participación en la economía digital, $ALPAKA
   * Reportar errores, proponer mejoras o sugerir nuevas funcionalidades para la plataforma.  
 * **Contribuciones Educativas:** Aquellos miembros de la comunidad que creen, traduzcan o colaboren en el desarrollo de material educativo (guías, artículos, tutoriales) recibirán recompensas periódicas en $ALPAKA, reconociendo su valioso aporte al conocimiento colectivo.  
 * **Comunidad y Moderación:** Miembros destacados que brinden apoyo, respondan preguntas o moderen discusiones en las redes sociales o en el grupo de Telegram de Alpaka podrán ser reconocidos como “Embajadores Alpaka” y recibir recompensas mensuales en $ALPAKA, junto con otros beneficios exclusivos.  
+* **Programa de Influencers:** Se establecerán acuerdos estratégicos con influencers y creadores de contenido cripto en Bolivia (TikTok, YouTube, X, etc.) para promocionar $ALPAKA y Alpaka Hub. Recibirán recompensas en $ALPAKA (financiadas desde los BNB de la tesorería del contrato de bonos) basadas en métricas de alcance y engagement.  
 * **Tareas Dinámicas y Gamificación:** Se implementará un sistema de "misiones" o "tareas" dentro de la plataforma, donde los usuarios podrán completar actividades simples (como ver videos instructivos, resolver encuestas de mercado o probar nuevas funciones beta) y obtener $ALPAKA como recompensa. Este enfoque busca fomentar la **adopción orgánica** del token y asegurar que todos los participantes tengan una motivación tangible para mantener la vitalidad de la comunidad.
 
 ### **B. La Plataforma "Alpaka Hub" (La Utilidad y el Conocimiento)**
 
-Alpaka Hub es una plataforma web pública y de acceso gratuito, financiada y mantenida por la tesorería del proyecto. Su ambición es convertirse en el "Bloomberg" del mercado P2P boliviano, ofreciendo información crucial y herramientas educativas.
+Alpaka Hub es una plataforma web pública y de acceso gratuito, financiada y mantenida por la tesorería del proyecto (proveniente de los BNB del contrato de la curva de bonos). Su ambición es convertirse en el "Bloomberg" del mercado P2P boliviano, ofreciendo información crucial y herramientas educativas.
 
 #### **Funcionalidades Clave de Alpaka Hub:**
 
@@ -125,51 +132,61 @@ La arquitectura actual es inherentemente escalable. El uso intensivo de la cach�
 * **Nuevas Funcionalidades:** Añadir un nuevo exchange, fuente de noticias o guía educativa es un proceso ágil, que implica la creación de un nuevo módulo de scraper/parser o la adición de un archivo Markdown al repositorio.  
 * **Gobernanza con $ALPAKA:** La integración futura con wallets para votaciones de gobernanza es una mejora sencilla de implementar sobre esta base tecnológica.
 
-## **6\. Tokenomics de $ALPAKA: Tejiendo Seguridad y Crecimiento Sostenible**
+## **6\. Tokenomics de $ALPAKA: Curva de Bonos para un Crecimiento Dinámico**
 
-La economía del token $ALPAKA está diseñada meticulosamente para asegurar la sostenibilidad a largo plazo, fomentar la descentralización progresiva y mitigar los riesgos de manipulación del mercado.
+La economía del token $ALPAKA se basa en un modelo de **curva de bonos (bonding curve)**, que reemplaza la emisión fija y la distribución tradicional. Este modelo asegura liquidez continua, un descubrimiento de precios orgánico y un mecanismo de financiación autónomo para el ecosistema.
 
-### **Parámetros Generales:**
+### **Parámetros Fundamentales del Contrato de Curva de Bonos:**
 
 * **Blockchain:** BNB Smart Chain (BEP-20)  
-* **Suministro Total:** 1,000,000,000,000 (1 Trillón) de $ALPAKA  
-* **Símbolo:** $ALPAKA  
-* **Impuesto sobre Transacciones (Tax):** 2% por operación (compra/venta)
+* **Símbolo del Token:** $ALPAKA  
+* **Suministro Total:** Dinámico (no hay un suministro máximo predefinido; los tokens se acuñan y queman según la demanda).  
+* **Precio Inicial (**INITIAL\_PRICE**):** 0.001 BNB por ALPAKA (configurable en el contrato). Representa el valor de un ALPAKA cuando la oferta circulante es cero.  
+* **Incremento de Precio (**PRICE\_INCREMENT**):** 0.00001 BNB por ALPAKA (configurable en el contrato). Es el factor por el cual el precio de ALPAKA aumenta por cada token adicional acuñado (vendido por el contrato).
 
-El contrato inteligente de $ALPAKA aplica automáticamente un impuesto del 2% sobre cada transacción en el mercado secundario. Este impuesto se distribuye de la siguiente manera:
+### **Mecanismo de la Curva de Bonos:**
 
-* 1% **a la Liquidez (Bloqueo Automático):** Esta porción se añade permanentemente al pool de liquidez en PancakeSwap. Este mecanismo crea un suelo de precios creciente para el token, haciendo que sea más estable y resistente a grandes ventas, actuando como una medida fundamental anti-"rug pull".  
-* 1% **a la Tesorería del Ecosistema:** Esta porción se envía a la wallet de la tesorería del proyecto. Los fondos de la tesorería se utilizarán para financiar el desarrollo continuo de Alpaka Hub, campañas de marketing, establecimiento de alianzas estratégicas, auditorías de seguridad, y el sistema de recompensas comunitarias. La wallet de la tesorería será pública y transparente, permitiendo a la comunidad auditar el uso de los fondos.
+El contrato inteligente de $ALPAKA actúa como un Automated Market Maker (AMM) primario, permitiendo a los usuarios comprar y vender tokens directamente del contrato.
 
-### **Distribución Inicial del Suministro:**
+* **Función de Compra (buy()):**  
+  * Los usuarios envían BNB al contrato.  
+  * El contrato calcula cuántos tokens $ALPAKA pueden ser acuñados (minted) al precio actual, que se determina por la cantidad de tokens ya en circulación (tokensSold).  
+  * Los tokens $ALPAKA se acuñan y se envían al comprador.  
+  * El precio de $ALPAKA aumenta para la siguiente compra, reflejando el incremento en la oferta.  
+  * Los BNB recibidos se acumulan en el contrato, formando la reserva de valor que respalda los tokens y sirve como fuente de financiación para el proyecto.  
+* **Función de Venta (sell()):**  
+  * Los usuarios envían tokens $ALPAKA de vuelta al contrato.  
+  * El contrato calcula el reembolso en BNB al precio actual (o un precio ligeramente inferior para generar un spread que beneficie la tesorería).  
+  * Los tokens $ALPAKA se queman (burned).  
+  * El precio de $ALPAKA disminuye para la siguiente transacción, reflejando la reducción en la oferta.  
+  * Los BNB se reembolsan al vendedor desde la reserva del contrato.
 
-El suministro total de $ALPAKA se distribuirá estratégicamente para garantizar un lanzamiento justo, liquidez robusta y un desarrollo sostenible.
+### **Modelo de Financiación del Ecosistema:**
 
-* 40% **\- Quema Inicial (Initial Burn):** Una parte significativa del suministro total será enviada a una dirección de "agujero negro" (inaccesible) en el momento de la creación del token. Esto reduce el suministro circulante desde el primer día, creando escasez y potencial valor.  
-* 20% **\- Preventa Pública (Presale):** Destinado a una venta pública para la comunidad inicial. Los fondos recaudados en esta fase serán utilizados para financiar la liquidez inicial en PancakeSwap, cubrir los costos de auditoría del contrato inteligente y lanzar las primeras campañas de marketing, asegurando un lanzamiento robusto y bien capitalizado.  
-* 25% **\- Liquidez Inicial en PancakeSwap (LP Lock):** Esta porción, financiada principalmente por la preventa, será bloqueada en un contrato de tiempo por un período prolongado (2 años). Este bloqueo de liquidez es crucial para generar confianza y seguridad entre los participantes, previniendo manipulaciones y asegurando un mercado estable.  
-* 10% **\- Tesorería del Ecosistema (Ecosystem Treasury):** Asignado para el desarrollo y crecimiento a largo plazo del proyecto. Estos tokens serán liberados de forma gradual a través de un esquema de vesting para asegurar la sostenibilidad y la gestión responsable de los fondos.  
-* 5% **\- Equipo (Team Allocation):** Reservado para el equipo fundador y los desarrolladores clave. Estos tokens estarán sujetos a un estricto esquema de vesting (liberación progresiva durante 2-3 años) para alinear los intereses del equipo con el éxito a largo plazo del proyecto y demostrar un compromiso genuino.
+El financiamiento para el desarrollo del Alpaka Hub, las campañas de marketing, los programas de recompensas (incluyendo influencers y embajadores) y las operaciones del equipo provienen directamente de los BNB acumulados en el contrato de la curva de bonos.
+
+* **Retiro de BNB (withdrawBNB()):** El propietario del contrato (inicialmente el equipo de Alpaka, con la intención de transición a gobernanza DAO) puede retirar los BNB acumulados en el contrato. Este mecanismo reemplaza el impuesto por transacción tradicional y permite una gestión flexible de los fondos para el crecimiento del ecosistema.  
+* **Transparencia:** Todas las transacciones en el contrato de la curva de bonos, incluyendo las compras, ventas y retiros de BNB, son públicas y auditables en la BNB Smart Chain.
 
 ## **7\. Hoja de Ruta (Roadmap)**
 
 Nuestra hoja de ruta es una guía estratégica que delinea los hitos clave y el crecimiento planificado del ecosistema Alpaka.
 
-### **Fase 1: La Formación de la Comunidad (Q3 2025\)**
+### **Fase 1: Lanzamiento de la Curva de Bonos (Q3 2025\)**
 
-* ✅ Creación y despliegue del Contrato Inteligente de $ALPAKA en BNB Smart Chain.  
+* ✅ Creación y despliegue del Contrato Inteligente de $ALPAKA con curva de bonos en BNB Smart Chain.  
 * ✅ Auditoría de Seguridad del Contrato por una firma externa de renombre.  
 * ✅ Lanzamiento oficial del White Paper y la página web inicial de Alpaka Hub.  
 * ✅ Establecimiento y crecimiento de las comunidades en Telegram, X (Twitter) y TikTok.  
-* ✅ Realización de la Preventa Pública ($ALPAKA Presale) para la comunidad.  
-* ✅ Lanzamiento justo de $ALPAKA en PancakeSwap con la liquidez bloqueada.
+* ✅ Apertura de la función de compra de $ALPAKA a través de la curva de bonos.
 
-### **Fase 2: La Construcción del Telar Digital (Q4 2025 – Q1 2026\)**
+### **Fase 2: Construcción del Telar Digital (Q4 2025 – Q1 2026\)**
 
 * ✅ Lanzamiento de la primera versión funcional de Alpaka Hub, incluyendo el monitor de precios P2P en tiempo real.  
 * ✅ Publicación de la primera edición de guías y tutoriales "Alpaka Educa" para principiantes.  
 * ✅ Integración temprana del sistema de recompensas comunitarias para incentivar la participación.  
-* ✅ Listado de $ALPAKA en CoinGecko y CoinMarketCap para aumentar la visibilidad y accesibilidad.
+* ✅ Inicio del Programa de Influencers y Embajadores para expandir el alcance.  
+* ✅ Listado de $ALPAKA en CoinGecko y CoinMarketCap (para seguimiento de precio y volumen).
 
 ### **Fase 3: Expansión del Ecosistema (2026)**
 
@@ -180,7 +197,7 @@ Nuestra hoja de ruta es una guía estratégica que delinea los hitos clave y el 
 
 ### **Fase 4: Hacia la Soberanía Total (A Largo Plazo)**
 
-* ✅ Transición completa a una estructura de gobernanza descentralizada (DAO), donde los tenedores de $ALPAKA tienen el control total sobre el futuro del proyecto.  
+* ✅ Transición completa a una estructura de gobernanza descentralizada (DAO), donde los tenedores de $ALPAKA tienen el control total sobre el futuro del proyecto y la gestión de los fondos de la curva de bonos.  
 * ✅ Investigación y Desarrollo para la posible creación de una stablecoin boliviana, sujeta a la evolución del marco regulatorio y las condiciones del mercado.  
 * ✅ Expansión de alianzas estratégicas con actores clave del ecosistema cripto y financiero en Bolivia y la región.  
 * ✅ Desarrollo de herramientas y servicios adicionales basados en las necesidades de la comunidad.
@@ -195,4 +212,4 @@ Te extendemos una cordial invitación a ser parte activa de nuestra comunidad. A
 
 ## **9\. Disclaimer**
 
-$ALPAKA es un criptoactivo de alto riesgo. Su valor puede fluctuar significativamente debido a la volatilidad del mercado. Invierta únicamente el capital que esté dispuesto a perder. Este documento tiene fines informativos y no constituye asesoramiento financiero, de inversión, legal o fiscal. Se recomienda encarecidamente realizar su propia investigación (DYOR \- Do Your Own Research) y consultar con profesionales calificados antes de tomar cualquier decisión de inversión. La información contenida en este White Paper está sujeta a cambios sin previo aviso.
+$ALPAKA es un criptoactivo de alto riesgo. Su valor puede fluctuar significativamente debido a la volatilidad del mercado y la naturaleza dinámica de la curva de bonos. Invierta únicamente el capital que esté dispuesto a perder. Este documento tiene fines informativos y no constituye asesoramiento financiero, de inversión, legal o fiscal. Se recomienda encarecidamente realizar su propia investigación (DYOR \- Do Your Own Research) y consultar con profesionales calificados antes de tomar cualquier decisión de inversión. La información contenida en este White Paper está sujeta a cambios sin previo aviso.
