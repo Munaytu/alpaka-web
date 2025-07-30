@@ -33,7 +33,7 @@ const InfoTooltip = ({ children, text }: { children: React.ReactNode, text: stri
         <span className="text-emerald-300 border-b border-dotted border-emerald-300">{children}</span>
       </TooltipTrigger>
       <TooltipContent className="bg-gray-800 text-white border-emerald-500 max-w-xs">
-        <p>{text}</p>
+        <div>{text}</div>
       </TooltipContent>
     </Tooltip>
   </TooltipProvider>
@@ -55,12 +55,12 @@ export function AlpakaTokenInfo() {
       {/* Sección 1: La Idea Principal */}
       <InfoSection title="El Corazón de $ALPAKA: La Curva de Bonos">
         <div className="text-lg text-center max-w-4xl mx-auto text-muted-foreground mb-12">
-          <p className="mb-4">
+          <div className="mb-4">
             Olvida todo lo que crees saber sobre cómo se compran y venden las criptomonedas. $ALPAKA no usa los mercados tradicionales. En su lugar, opera con un sistema llamado <strong>Curva de Bonos</strong>, que es como un dispensador automático e inteligente para nuestro token.
-          </p>
-          <p>
+          </div>
+          <div>
             Piensa en ello como una máquina expendedora: tú pones dinero (en este caso, la criptomoneda <InfoTooltip text="BNB es la moneda nativa de la red BNB Smart Chain, la tecnología sobre la que construimos. Es como el 'combustible' necesario para hacer transacciones en esa red.">BNB</InfoTooltip>) y la máquina te da un producto ($ALPAKA). La magia está en que el precio cambia automáticamente según cuánta gente esté comprando o vendiendo.
-          </p>
+          </div>
         </div>
         
         <div className="grid md:grid-cols-2 gap-8 items-center mb-12">
@@ -136,12 +136,12 @@ export function AlpakaTokenInfo() {
                 <CardTitle className="text-2xl text-white">¿Quién controla la Tesorería?</CardTitle>
               </CardHeader>
               <CardContent>
-                <p className="text-muted-foreground mb-4">
+                <div className="text-muted-foreground mb-4">
                   Al principio, el equipo fundador gestiona los fondos para poder avanzar rápidamente. Sin embargo, nuestro objetivo es la descentralización total.
-                </p>
-                <p className="text-muted-foreground">
+                </div>
+                <div className="text-muted-foreground">
                   En el futuro, el control pasará a una <InfoTooltip text="Una DAO es como un club digital donde los miembros (tenedores de tokens) votan para tomar decisiones. Es una forma de gobierno democrático y transparente en la blockchain.">DAO (Organización Autónoma Descentralizada)</InfoTooltip>. Esto significa que <strong>tú</strong>, como tenedor de $ALPAKA, podrás votar y decidir cómo se gasta el dinero de la tesorería.
-                </p>
+                </div>
               </CardContent>
             </Card>
         </div>
