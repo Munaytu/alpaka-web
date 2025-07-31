@@ -29,13 +29,15 @@ export function useCryptoPrices() {
   const [usdtRefBuyPrice, setUsdtRefBuyPrice] = useState<number | null>(null);
   const [usdtRefSellPrice, setUsdtRefSellPrice] = useState<number | null>(null);
   const [loading, setLoading] = useState(true);
+  const [lastUpdated, setLastUpdated] = useState<Date | null>(null);
 
   useEffect(() => {
     const fetchData = async () => {
+      setLoading(true);
       try {
         const [usdtP2pResponse, btcSpotResponse] = await Promise.all([
           fetch('https://criptoya.com/api/USDT/BOB/1', { cache: 'no-store' }),
-          fetch('https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=usd', { cache: 'no-store' })
+          fetch('/api/btc-price', { cache: 'no-store' })
         ]);
 
         if (!usdtP2pResponse.ok || !btcSpotResponse.ok) {
@@ -71,30 +73,35 @@ export function useCryptoPrices() {
         setUsdtPriceData(formattedUsdtData);
         
         if (btcSpotData && btcSpotData.bitcoin && typeof btcSpotData.bitcoin.usd === 'number') {
-            console.log("Raw BTC Spot Data:", btcSpotData);
             const calculatedBtcPrice = btcSpotData.bitcoin.usd;
             setBtcSpotPrice(calculatedBtcPrice);
-            console.log("Calculated BTC Spot Price:", calculatedBtcPrice);
         } else {
             console.error("Error: BTC spot data not in expected format or missing.", btcSpotData);
             setBtcSpotPrice(null);
         }
 
         if (formattedUsdtData.length > 0) {
-            const binanceData = formattedUsdtData.find(e => e.platform === 'binance P2P');
-            if (binanceData) {
-                if (binanceData.buyPrice !== null && binanceData.sellPrice !== null) {
-                    setUsdtRefBuyPrice(binanceData.buyPrice);
-                    setUsdtRefSellPrice(binanceData.sellPrice);
-                } else {
-                    setUsdtRefBuyPrice(null);
-                    setUsdtRefSellPrice(null);
-                }
+            const validBuyPrices = formattedUsdtData.map(p => p.buyPrice).filter(p => p !== null) as number[];
+            const validSellPrices = formattedUsdtData.map(p => p.sellPrice).filter(p => p !== null) as number[];
+
+            if (validBuyPrices.length > 0) {
+                const averageBuyPrice = validBuyPrices.reduce((acc, price) => acc + price, 0) / validBuyPrices.length;
+                setUsdtRefBuyPrice(averageBuyPrice);
             } else {
                 setUsdtRefBuyPrice(null);
+            }
+
+            if (validSellPrices.length > 0) {
+                const averageSellPrice = validSellPrices.reduce((acc, price) => acc + price, 0) / validSellPrices.length;
+                setUsdtRefSellPrice(averageSellPrice);
+            } else {
                 setUsdtRefSellPrice(null);
             }
+        } else {
+            setUsdtRefBuyPrice(null);
+            setUsdtRefSellPrice(null);
         }
+        setLastUpdated(new Date());
       } catch (error) {
         console.error('No se pudieron obtener los datos de precios:', error);
       } finally {
@@ -108,6 +115,6 @@ export function useCryptoPrices() {
     return () => clearInterval(interval);
   }, []);
 
-  return { usdtPriceData, btcSpotPrice, usdtRefBuyPrice, usdtRefSellPrice, loading };
+  return { usdtPriceData, btcSpotPrice, usdtRefBuyPrice, usdtRefSellPrice, loading, lastUpdated };
 }
 ''

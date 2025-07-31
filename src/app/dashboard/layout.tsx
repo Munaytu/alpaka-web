@@ -40,10 +40,13 @@ export default function DashboardLayout({
 
   const navItems = [
     { href: "/dashboard", label: "Monitor P2P", icon: LayoutDashboard },
+    
+    { href: "/dashboard/banks", label: "Bancos", icon: List },
     { href: "/dashboard/education", label: "Alpaka Educa", icon: GraduationCap },
     { href: "/dashboard/services", label: "Directorio", icon: List },
     { href: "https://t.me/ComunidadCryptoBolivia", label: "Comunidad", icon: Newspaper, target: "_blank" },
     { href: "/dashboard/alpaka", label: "$ALPAKA Token", icon: CircleDollarSign },
+    { href: "/dashboard/faq", label: "FAQ", icon: Newspaper },
   ];
 
   const currentNavItem = navItems.find(item => pathname.startsWith(item.href));
