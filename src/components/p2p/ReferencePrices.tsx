@@ -1,6 +1,10 @@
 
+"use client";
+
 import { Card, CardContent } from "@/components/ui/card";
 import { HistoricalPriceChart } from "@/components/p2p/HistoricalPriceChart";
+import { getRandomMessage } from "@/lib/motivational-messages";
+import { useEffect, useState } from "react";
 
 interface ReferencePricesProps {
   usdtRefBuyPrice: number | null;
@@ -9,13 +13,24 @@ interface ReferencePricesProps {
 }
 
 export function ReferencePrices({ usdtRefBuyPrice, usdtRefSellPrice, loading }: ReferencePricesProps) {
+  const [randomMessage, setRandomMessage] = useState('');
+
+  useEffect(() => {
+    if (loading) {
+      setRandomMessage(getRandomMessage());
+    }
+  }, [loading]);
+
   return (
     <>
       <Card>
         <CardContent className="p-6">
           <h2 className="text-2xl font-bold mb-4 text-center">Precios de Referencia USDT/BOB</h2>
           {loading ? (
-            <div className="text-center">Cargando...</div>
+            <div className="text-center">
+                <p className="text-lg italic text-muted-foreground">Cargando precios...</p>
+                <p className="text-sm text-muted-foreground mt-2 h-8">{randomMessage}</p>
+            </div>
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div className="flex flex-col items-center">

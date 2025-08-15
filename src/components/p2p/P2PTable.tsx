@@ -1,4 +1,6 @@
 
+"use client";
+
 import Image from "next/image";
 import {
   Table,
@@ -11,6 +13,8 @@ import {
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import { ArrowDown, ArrowUp } from 'lucide-react';
+import { getRandomMessage } from "@/lib/motivational-messages";
+import { useEffect, useState } from "react";
 
 interface P2PPrice {
   platform: string;
@@ -28,6 +32,14 @@ interface P2PTableProps {
 }
 
 export function P2PTable({ data, type, loading }: P2PTableProps) {
+  const [randomMessage, setRandomMessage] = useState('');
+
+  useEffect(() => {
+    if (loading) {
+      setRandomMessage(getRandomMessage());
+    }
+  }, [loading]);
+
   const sortedData = [...data].sort((a, b) => {
     if (type === 'buy') {
       return (b.buyPrice || 0) - (a.buyPrice || 0);
@@ -49,7 +61,12 @@ export function P2PTable({ data, type, loading }: P2PTableProps) {
           </TableHeader>
           <TableBody>
             {loading ? (
-              <TableRow><TableCell colSpan={2} className="text-center">Cargando...</TableCell></TableRow>
+              <TableRow>
+                <TableCell colSpan={2} className="text-center h-24">
+                  <p className="text-lg italic text-muted-foreground">Cargando...</p>
+                  <p className="text-sm text-muted-foreground mt-2 h-8">{randomMessage}</p>
+                </TableCell>
+              </TableRow>
             ) : (
               sortedData.map((item, index) => (
                 <TableRow key={item.platform}>

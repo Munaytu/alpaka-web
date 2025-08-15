@@ -6,12 +6,11 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useCryptoPrices } from "@/hooks/use-crypto-prices";
-import { Skeleton } from "@/components/ui/skeleton";
-import { ArrowRight, Info } from "lucide-react";
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
+import { ArrowRight } from "lucide-react";
+import { FormattedCryptoData } from "@/types";
 
-export default function PriceConverter() {
-  const { usdtRefBuyPrice, usdtRefSellPrice, loading, lastUpdated } = useCryptoPrices();
+export default function PriceConverter({ initialData }: { initialData: FormattedCryptoData }) {
+  const { usdtRefBuyPrice, usdtRefSellPrice, loading, lastUpdated } = useCryptoPrices(initialData);
   const [amount, setAmount] = useState<number | "">("");
   const [fromCurrency, setFromCurrency] = useState<"BOB" | "USDT">("BOB");
   const [toCurrency, setToCurrency] = useState<"USDT" | "BOB">("USDT");

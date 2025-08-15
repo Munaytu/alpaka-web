@@ -5,9 +5,10 @@ import { useCryptoPrices } from "@/hooks/use-crypto-prices";
 import { ReferencePrices } from "@/components/p2p/ReferencePrices";
 import { P2PTable } from "@/components/p2p/P2PTable";
 import { GlobalPrice } from "@/components/p2p/GlobalPrice";
+import { FormattedCryptoData } from "@/types";
 
-export default function P2pPriceMonitor() {
-  const { usdtPriceData, btcSpotPrice, usdtRefBuyPrice, usdtRefSellPrice, loading } = useCryptoPrices();
+export default function P2pPriceMonitor({ initialData }: { initialData: FormattedCryptoData }) {
+  const { usdtPriceData, btcSpotPrice, usdtRefBuyPrice, usdtRefSellPrice, loading } = useCryptoPrices(initialData);
 
   return (
     <div className="space-y-8">
